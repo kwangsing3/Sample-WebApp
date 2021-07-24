@@ -1,6 +1,7 @@
 package router
 
 import (
+	"io/ioutil"
 	"net/http"
 	"path"
 
@@ -18,9 +19,25 @@ func SetRouter(r *mux.Router, flag int8) error {
 			w.Write([]byte(`<font color="red">Hello red world!</font>`))
 		})
 	*/
+	r.HandleFunc("/post", postHandler).Methods(`POST`)
 	return nil
 }
 func homeHandler(w http.ResponseWriter, req *http.Request) {
 	//w.Write([]byte(`<font color="red">Hello red world!</font>`))
 	http.ServeFile(w, req, path.Join(`res/index.html`))
+}
+func postHandler(w http.ResponseWriter, req *http.Request) {
+	if req.Method == "POST" {
+		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			http.Error(w, "Error reading request body",
+				http.StatusInternalServerError)
+		}
+
+		// Will return the post query which function got.
+		w.Write(body)
+	} else {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+	}
+	//w.Write([]byte(`Request Method: ` + req.Method))
 }

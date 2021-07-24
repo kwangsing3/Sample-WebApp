@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"> 
+    
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <section id="section1"></section>
+        <section id="section2">
+            Section2: {(section2)}
+        </section>
+        <section id="section3"></section>
+        <section id="section4"></section>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        $(function(){
+            new Vue()({ 
+                el:'#section2',
+                data:{
+                    copyright:'CopyRight@.inc',
+                },
+            })
+        })()
+
+        const Section2 = {
+            data(){
+                return {
+                    section2: 0
+                }
+            }
+        }
+        Vue.createApp(section2).mount('#section2')
+    </script>
+</body>
+</html> 
